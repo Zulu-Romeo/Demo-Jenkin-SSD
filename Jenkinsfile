@@ -1,45 +1,46 @@
 pipeline {
     agent any
+    environment {
+        VERSION = "2.2.4"
+    }
+
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-                // Here you can define commands for your build
+                echo "Building... with version ${env.VERSION}"
+                // Add your build commands here
             }
         }
+
         stage('Test') {
             when {
-                // Define your condition here
-                expression { 
-                    // Add your condition logic
-                    // For example:
-                    return env.RUN_TESTS == 'true'
+                expression {
+                    // Modify conditions as needed
+                    return params.flag == false || params.flag == true
                 }
             }
             steps {
-                echo 'Testing..'
-                // Here you can define commands for your tests
+                // Add test steps here
+                echo 'Testing...'
             }
         }
+
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
-                // Here you can define commands for your deployment
+                echo 'Deploying...'
+                // Add your deployment commands here
             }
         }
     }
+    
     post {
-        success {
-            echo 'Pipeline executed successfully! Sending notifications...'
-            // Add actions for successful pipeline execution, like sending notifications
+        always {
+            echo 'This will always run, regardless of the build result'
+            // Add any post-build actions that should always run here
         }
         failure {
-            echo 'Pipeline failed! Notifying stakeholders...'
-            // Add actions for failed pipeline execution, like notifying stakeholders
-        }
-        always {
-            echo 'Cleaning up...'
-            // Add actions that should always run regardless of pipeline status
+            echo 'This will run only if the build fails'
+            // Add any post-build actions specific to failure here
         }
     }
 }
