@@ -5,6 +5,7 @@ pipeline {
     agent any
     environment {
         VERSION = "2.2.4"
+    }
     tools {
         maven 'Maven'
     }
@@ -18,8 +19,7 @@ pipeline {
         stage('Test') {
             when {
                 expression {
-                    return flag == false
-                    return !flag
+                    return flag == false || !flag
                 }
             }
             steps {
@@ -45,5 +45,4 @@ pipeline {
             // Add any post-build actions specific to failure here
         }
     }
-}
 }
