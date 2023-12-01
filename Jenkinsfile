@@ -8,6 +8,14 @@ pipeline {
             }
         }
         stage('Test') {
+            when {
+                // Define your condition here
+                expression { 
+                    // Add your condition logic
+                    // For example:
+                    return env.RUN_TESTS == 'true'
+                }
+            }
             steps {
                 echo 'Testing..'
                 // Here you can define commands for your tests
