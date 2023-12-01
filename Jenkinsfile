@@ -4,7 +4,7 @@ def VERSION = '1.0.0' // Replace with your actual version or define it as needed
 pipeline {
     agent any
     tools {
-        maven 'Maven'
+        maven 'Maven3.23'
     }
     parameters {
         booleanParam(name: 'flag', defaultValue: true, description: 'Set flag to true or false')
