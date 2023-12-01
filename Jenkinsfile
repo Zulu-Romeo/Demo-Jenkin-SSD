@@ -5,12 +5,11 @@ pipeline {
     agent any
     tools {
         maven 'Maven'
-
+    }
     parameters {
         booleanParam(name: 'flag', defaultValue: true, description: 'Set flag to true or false')
         string(name: 'VERSION', defaultValue: '2.2.4', description: 'Specify the version')
     }
-
     stages {
         stage('Build') {
             steps {
@@ -22,12 +21,10 @@ pipeline {
                 }
             }
         }
-
         stage('Test') {
             when {
                 expression {
-                    return !flag
-                    return params.flag == false
+                    return !flag || params.flag == false
                 }
             }
             steps {
