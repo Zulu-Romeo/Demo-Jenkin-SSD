@@ -7,7 +7,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Building... with version ${env.VERSION}"
+                echo "Building... with version ${VERSION}"
+                echo 'Building...'
                 // Add your build commands here
             }
         }
@@ -15,32 +16,17 @@ pipeline {
         stage('Test') {
             when {
                 expression {
-                    // Modify conditions as needed
-                    return params.flag == false || params.flag == true
+                    return flag == false
+                    return flag == true
                 }
             }
             steps {
-                // Add test steps here
-                echo 'Testing...'
-            }
-        }
+@@ -27,7 +25,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
+                echo 'Deploying... And test stage should be skipped'
                 echo 'Deploying...'
                 // Add your deployment commands here
             }
         }
-    }
-    
-    post {
-        always {
-            echo 'This will always run, regardless of the build result'
-            // Add any post-build actions that should always run here
-        }
-        failure {
-            echo 'This will run only if the build fails'
-            // Add any post-build actions specific to failure here
-        }
-    }
-}
